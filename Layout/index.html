@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+        <title>Find Postal Address of any Location on Google Maps</title>
+        <meta name="description" content="Find the Postal Address of any location on Google Maps including the latitude and longitude using Reverse Geocoding and the Geolocation API." />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="canonical" href="index.html">
+        <link href="css/themify-icons.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="css/theme-nearblack.css" rel="stylesheet" type="text/css" media="all" />
+        <link href='http://fonts.googleapis.com/css?family=Raleway:100,400,300,500,600,700%7COpen+Sans:400,500,600' rel='stylesheet' type='text/css'>
+        <style>
+          .search {
+        position: absolute;
+        bottom: 50px;
+        left: 10px;
+        z-index: 20000;
+    }
+    .background-image-holder img {
+      display:inline;
+    }
+
+        </style>
+    </head>
+
+    <body>
+        <div class="nav-container">
+            <nav>
+                <div class="nav-bar">
+                    <div class="module left">
+                        <a href="#">
+                            <!-- <img class="logo logo-dark" alt="CTRLQ logo" src="img/black.png"> -->
+                        </a>
+                    </div>
+                    <div class="module widget-handle mobile-toggle right visible-sm visible-xs">
+                        <i class="ti-menu"></i>
+                    </div>
+                    <div class="module-group right">
+                        <div class="module left">
+                            <ul class="menu">
+                                <li>
+                                    <a href="#">link</a>
+                                </li>
+                                <li>
+                                    <a href="#">link</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div class="main-container">
+
+            <section class="fullscreen pb0 pt0">
+                <div class="map-holder background-image-holder pt180 pb180" id="googlemaps">
+                </div>
+                <div class="search">
+                    <form class="form-inline pull-right" action="#" onsubmit="showAddress(this.address.value); return false">
+                        <input type="text" class="input-large search-query" placeholder="Digite uma cidade, CEP ou endereço..." name="address">
+                        <button type="submit" class="btn">Buscar local</button>
+                    </form>
+                </div>
+            </section>
+
+            <section>
+                <div class="container">
+                    <div class="row mb32 mb-xs-24">
+                        <div class="col-md-10 col-md-offset-1 col-sm-12 text-center">
+                            <h2>Mapa de problemas na rede elétrica com Google Maps</h2>
+                        </div>
+                    </div>
+                    <div class="row mb32 mb-xs-24">
+                        <div class="col-sm-10 col-sm-offset-1">
+                            <p class="lead">
+                            Através do mapa você pode rapidamente localizar qualquer ponto no Brasil para informar um problema na rede elétrica. Basta arrastar o marcador vermelho para o local desejo no mapa e clicar no botão informar um problema.<br/>
+                            Informações detalhadas no local pesquisado são informadas como a cidade, CEP e latitude e logintude
+                            </p>
+                            <p class="lead">
+                            Internamente são utilizadas as ferramentas de geocodificação do Google Maps para encontrar um ponto no mapa e para traduzir um ponto em um endereço legível em formato texto.
+                            </p>
+                            <p class="lead">É possível iniciar a busca em local aproximado ao que você se encontra.<br/>
+                            A localização é baseada em seu endereço de IP, torres de telefonia e pontos de acesso WiFi que seu dispositivo pode detectar.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row mb32 mb-xs-24">
+                        <div class="col-md-10 col-md-offset-1 col-sm-12 text-center">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="page-title page-title-4 bg-secondary">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3 class="uppercase mb0"></h3>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <ol class="breadcrumb breadcrumb-2">
+                                <li>
+                                    <a href="#">link</a>
+                                </li>
+                                <li>
+                                    <a href="#">link</a>
+                                </li>
+                                <li>
+                                    <a href="#">link</a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDKw1I9ZlI-piCBp2zXSuviBDVRjju-aYI"></script>
+        <script src="js/maps.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/flexslider.min.js"></script>
+        <script src="js/smooth-scroll.min.js"></script>
+        <script src="js/parallax.js"></script>
+        <script src="js/scripts.js"></script>
+
+    </body>
+</html>
