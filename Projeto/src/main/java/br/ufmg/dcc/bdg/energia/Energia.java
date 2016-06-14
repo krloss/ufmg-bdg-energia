@@ -9,7 +9,12 @@ public class Energia {
     public static void main(String[] args) {
         System.out.println("[Energia] >>> Inicio...");
 
-        Spark.staticFileLocation("/"); // energia/src/main/resources
+        if(1 == args.length) {
+            System.out.println("[Energia] >>> " + args[0]);
+            Spark.externalStaticFileLocation(args[0]);
+        }
+        else
+            Spark.staticFileLocation("/"); // energia/src/main/resources
 
         Spark.get(new Route("/oi") {
             @Override

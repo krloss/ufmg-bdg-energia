@@ -8,7 +8,6 @@ import java.sql.PreparedStatement;
 Estrutura do Banco:
 
 CREATE DATABASE energia;
-
  */
 
 public class BancoDados {
