@@ -121,6 +121,11 @@ function showMap(lat, lng, hideinfo) {
         marker.setPosition( event.latLng );
     });
 
+    google.maps.event.addListener(marker, 'click', function(e) {
+        var self = this;
+        var map = this.getMap();
+        this.info.open(map, self);
+    });
     google.maps.event.addListener(marker, 'dragstart', function(e) {
         marker.info.close();
     });
