@@ -1,0 +1,60 @@
+@media screen and (min-width: 640px) {
+
+	.search{
+		width: 500px;
+	}
+	.search .search-query,
+	.search .search-query + .btn{
+		float: left;
+		display: block;
+	}
+	.search .search-query{
+		width: 70%;
+	}
+
+}
+
+.search .search-query + .btn{
+	width: 30%;
+	padding: 0 5px;
+	background: #f27326;
+	border-color: #f27326;
+}
+.search .search-query + .btn:hover{
+	background: #c44a00;
+	border-color: #c44a00;
+}
+.pos-report{
+	display: inline-block;
+	margin-left: 20px;
+	margin-top: 10px;
+}
+.search {
+    position: absolute;
+    bottom: 50px;
+    left: 10px;
+    z-index: 1000;
+}
+.background-image-holder img {
+  display:inline;
+}
+
+// Modal
+
+.modal.modal-wide .modal-dialog {
+  width: 90%;
+}
+.modal-wide .modal-body {
+  overflow-y: auto;
+}
+
+
+.modal-content{
+	border: 0;
+	border-radius: 0;
+}
+@media query and (min-width: 1200px) {
+	.modal-dialog{
+    	max-width: 1000px;
+	}
+}

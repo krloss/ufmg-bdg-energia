@@ -9,19 +9,8 @@
         <link href="css/themify-icons.css" rel="stylesheet" type="text/css" media="all" />
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
         <link href="css/theme-nearblack.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="css/extras.css" rel="stylesheet" type="text/css" media="all" />
         <link href='http://fonts.googleapis.com/css?family=Raleway:100,400,300,500,600,700%7COpen+Sans:400,500,600' rel='stylesheet' type='text/css'>
-        <style>
-          .search {
-        position: absolute;
-        bottom: 50px;
-        left: 10px;
-        z-index: 20000;
-    }
-    .background-image-holder img {
-      display:inline;
-    }
-
-        </style>
     </head>
 
     <body>
@@ -58,7 +47,7 @@
                 <div class="map-holder background-image-holder pt180 pb180" id="googlemaps">
                 </div>
                 <div class="search">
-                    <form class="form-inline pull-right" action="#" onsubmit="showAddress(this.address.value); return false">
+                    <form class="form-inline" action="#" onsubmit="showAddress(this.address.value); return false">
                         <input type="text" class="input-large search-query" placeholder="Digite uma cidade, CEP ou endereço..." name="address">
                         <button type="submit" class="btn">Buscar local</button>
                     </form>
@@ -114,10 +103,40 @@
                     </div>
                 </div>
             </section>
+
+
+            <div class="modal modal-wide fade" id="modal-report" tabindex="-1" role="dialog">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-body">
+					<h4 class="text-center">Reportar problema</h4>
+					<form action="" class="form">
+						<div class="form-group">
+							<select>
+								<option>Selecione a categoria</option>
+								<option value="0">Fio desencapado</option>
+								<option value="1">Ligação clandestina</option>
+								<option value="2">Fio partido</option>
+								<option value="3">Ligação com risco de curto-circuito</option>
+								<option value="4">Outro</option>
+							</select>
+							<textarea placeholder="Descreva o problema"></textarea>
+							<input type="submit" value="Enviar">
+							<input type="hidden" name="latitude">
+							<input type="hidden" name="longitude">
+							<input type="hidden" name="endereco">
+						</div>
+					</form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
         </div>
+        <script src="js/jquery.min.js"></script>
         <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDKw1I9ZlI-piCBp2zXSuviBDVRjju-aYI"></script>
         <script src="js/maps.js"></script>
-        <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/flexslider.min.js"></script>
         <script src="js/smooth-scroll.min.js"></script>

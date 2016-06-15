@@ -11,22 +11,6 @@ var mr_firstSectionHeight,
 $(document).ready(function() { 
     "use strict";
 
-    // Smooth scroll to inner links
-    
-    $('.inner-link').each(function(){
-        var href = $(this).attr('href');
-        if(href.charAt(0) !== "#"){
-            $(this).removeClass('inner-link');
-        }
-    });
-
-	if($('.inner-link').length){
-		$('.inner-link').smoothScroll({
-			offset: -55,
-			speed: 800
-		});
-    }
-
     // Update scroll variable for scrolling functions
 
     addEventListener('scroll', function() {
@@ -40,10 +24,6 @@ $(document).ready(function() {
             $(this).addClass('fadeIn');
         });
     }, 200);
-
-    // Initialize Tooltips
-
-    $('[data-toggle="tooltip"]').tooltip();
 
     // Navigation
 
@@ -131,35 +111,6 @@ $(document).ready(function() {
         e.stopPropagation();
     });
     
-    // Offscreen Nav
-    
-    if($('.offscreen-toggle').length){
-    	$('body').addClass('has-offscreen-nav');
-    }
-    else{
-        $('body').removeClass('has-offscreen-nav');
-    }
-    
-    $('.offscreen-toggle').click(function(){
-    	$('.main-container').toggleClass('reveal-nav');
-    	$('nav').toggleClass('reveal-nav');
-    	$('.offscreen-container').toggleClass('reveal-nav');
-    });
-    
-    $('.main-container').click(function(){
-    	if($(this).hasClass('reveal-nav')){
-    		$(this).removeClass('reveal-nav');
-    		$('.offscreen-container').removeClass('reveal-nav');
-    		$('nav').removeClass('reveal-nav');
-    	}
-    });
-    
-    $('.offscreen-container a').click(function(){
-    	$('.offscreen-container').removeClass('reveal-nav');
-    	$('.main-container').removeClass('reveal-nav');
-    	$('nav').removeClass('reveal-nav');
-    });
-
 
     // Interact with Map once the user has clicked (to prevent scrolling the page = zooming the map
 
@@ -174,23 +125,6 @@ $(document).ready(function() {
 			}
 		});
     }
-    
-
-    // Get referrer from URL string 
-    if (getURLParameter("ref")) {
-        $('form.form-email').append('<input type="text" name="referrer" class="hidden" value="' + getURLParameter("ref") + '"/>');
-    }
-
-    function getURLParameter(name) {
-        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
-    }
-
-    // Disable parallax on mobile
-
-    if ((/Android|iPhone|iPad|iPod|BlackBerry|Windows Phone/i).test(navigator.userAgent || navigator.vendor || window.opera)) {
-        $('section').removeClass('parallax');
-    }
-    
 
     // Load Google MAP API JS with callback to initialise when fully loaded
     if(document.querySelector('[data-maps-api-key]') && !document.querySelector('.gMapsAPI')){

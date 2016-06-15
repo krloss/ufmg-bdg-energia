@@ -1,8 +1,8 @@
-var map, latLng, marker, infoWindow, ad;
+var map, latLng, marker, infoWindow, address;
 var geocoder = new google.maps.Geocoder();
 
 function showAddress(val) {
-    //infoWindow.close();
+
     geocoder.geocode({
         'address': decodeURI(val)
     }, function(results, status) {
@@ -10,8 +10,7 @@ function showAddress(val) {
             marker.setPosition(results[0].geometry.location);
             geocode(results[0].geometry.location);
         } else {
-            defaultLocation();
-            //alert("Sorry but Google Maps could not find this location.");
+            alert("Não foi possível encontrar um local aproximado com estes termos.");
         }
     });
 }
@@ -27,16 +26,17 @@ function geocode(position, pan) {
         var html = '';
         window.location.hash = '#' + marker.getPosition().lat() + "," + marker.getPosition().lng();
         if (responses && responses.length > 0) {
+            address = responses[0].formatted_address;
             html +=  responses[0].formatted_address;
             html += '<br /><small>' + 'Latitude: ' + marker.getPosition().lat() + '<br />Longitude: ' + marker.getPosition().lng() + '</small><br/>';
-            html += '<span style="float:right"><a target="_blank" href="#">Reportar problema</a></span>';
+            html += '<div class="text-center"><a class="btn pos-report" target="_blank" href="javascript:void(0);">Reportar problema</a></div>';
         } else {
-            html += 'Sorry but Google Maps could not determine the approximate postal address of this location.';
+            html += 'Não foi possível determinar um endereço válido para essa localização';
         }
         if (pan)
             map.panTo(marker.getPosition());
-        infoWindow.setContent("<div id='iw' style='max-width:250px;color:#000'>" + html + "</div>");
-        infoWindow.open(map, marker);
+        marker.info.setContent("<div id='iw' style='max-width:250px;color:#000'>" + html + "</div>");
+        marker.info.open(map, marker);
     });
 }
 
@@ -63,26 +63,10 @@ function initialize() {
     };
 
     map = new google.maps.Map(document.getElementById('googlemaps'), myOptions);
-    //var ad = '<ins class="adsbygoogle" style="display:inline-block;width:320px;height:100px" data-ad-client="ca-pub-3152670624293746" data-ad-slot="1136209176"></ins>';
-    //var adNode = document.createElement('div');
-    //adNode.innerHTML = ad;
-    //map.controls[google.maps.ControlPosition.TOP_CENTER].push(adNode);
-    google.maps.event.addListenerOnce(map, 'tilesloaded', function() {
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    });
 
     
 
     var coordinates = window.location.hash;
-    /*
-    if (coordinates !== "") {
-        var hashlocation = coordinates.split(",");
-        if (hashlocation.length == 2) {
-            showMap(hashlocation[0].substr(1), hashlocation[1], true);
-            return;
-        }
-    }
-    */
 
     if (coordinates !== "") {
         defaultLocation();
@@ -93,6 +77,8 @@ function initialize() {
         defaultLocation();
     }
 
+    placeMarkers();
+
 }
 
 function locationFound(position) {
@@ -100,7 +86,8 @@ function locationFound(position) {
 }
 
 function defaultLocation() {
-    showMap(38.8977, -77.0366);
+    //praça raul soares
+    showMap(-19.922822, -43.945162);
 }
 
 function showMap(lat, lng, hideinfo) {
@@ -116,15 +103,17 @@ function showMap(lat, lng, hideinfo) {
         animation: google.maps.Animation.DROP
     });
 
-    infoWindow = new google.maps.InfoWindow({
-        content: '<div id="iw" style="max-width:240px">Please drag this red marker anywhere on the map to know the approximate postal address of that location.<br>For help, please <a href="https://twitter.com/labnol" target="_blank">tweet</a> or <a href="mailto:amit@labnol.org?Subject=MapsAddress" taret="_blank">email us</a>.</div>'
+    marker.info = new google.maps.InfoWindow({
+        content: '<div id="iw" style="max-width:240px">Clique no local que deseja relatar um problema ou localize um local aproximado.</div>'
     });
 
     if (hideinfo) {
         geocode(latLng);
     } else {
-        infoWindow.open(map, marker);
+        marker.info.open(map, marker);
     }
+
+
 
     google.maps.event.addListener(map, 'click', function(event) {
         var point = marker.getPosition();
@@ -133,7 +122,7 @@ function showMap(lat, lng, hideinfo) {
     });
 
     google.maps.event.addListener(marker, 'dragstart', function(e) {
-        infoWindow.close();
+        marker.info.close();
     });
 
     google.maps.event.addListener(marker, 'dragend', function(e) {
@@ -141,8 +130,98 @@ function showMap(lat, lng, hideinfo) {
         map.panTo(point);
         geocode(point);
     });
+
 }
 
-// google.maps.event.addDomListener(window, 'load', initialize);
-
 initialize();
+
+
+function placeMarkers(){
+
+
+    $.ajax({
+        type: "GET",
+        url: "http://localhost",
+        success: function(response){
+
+        var response = [
+
+            {
+                latitude: -19.94462832401706,
+                longitude:  -43.960418701171875,
+                endereco: "R. Josafá Belo, 450 - Cidade Jardim, Belo Horizonte - MG, 30380-100, Brasil",
+                descricao: "Teste",
+                "categoria": "0"
+            },
+            {
+                latitude:  -19.952050966837387,
+                longitude:  -43.931922912597656,
+                endereco: "R. Conde de Linhares, 240 - Cidade Jardim, Belo Horizonte - MG, 30380-030, Brasil",
+                descricao: "Teste2",
+                "categoria": "1"
+            },
+
+        ];
+         
+
+        $.each(response, function( i, item ){
+
+            var latLng = new google.maps.LatLng(item.latitude, item.longitude);
+            var m = new google.maps.Marker({
+                map: map,
+                position: latLng,
+                clickable: true
+            });
+
+            m.info = new google.maps.InfoWindow({
+              content: item.descricao
+            });
+
+            m.setIcon('http://localhost/map/img/marker.png');
+
+            google.maps.event.addListener(m, 'click', function() {
+                var self = this;
+                var map = this.getMap();
+                this.info.open(map, self);
+
+            });
+
+        });
+            
+
+        }
+    });
+
+}
+   
+
+$(document).on('click', 'a.pos-report', function(e){
+    e.preventDefault();
+    $('#modal-report input[name="latitude"]').val(marker.position.lat());
+    $('#modal-report input[name="longitude"]').val(marker.position.lng());
+    $('#modal-report input[name="endereco"]').val(address);
+    $('#modal-report').modal();
+});
+
+$("#modal-report form").on('submit', function(e){
+
+
+    e.preventDefault();
+    
+    var data = $(this).serialize();
+
+    $.ajax({
+        type: "POST",
+        data: data,
+        url: "http://localhost",
+        success: function(){
+            $('#modal-report').modal('hide');
+            alert('Problema reportado com sucesso.');
+        },
+        error: function() {
+            alert('Não foi possível registrar o problema, por favor tente novamente mais tarde.');
+        }
+
+    });
+
+});
