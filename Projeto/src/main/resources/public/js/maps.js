@@ -146,9 +146,9 @@ function placeMarkers(){
 
     $.ajax({
         type: "GET",
-        url: "http://localhost",
+        url: "http://localhost:4567/pesquisar",
         success: function(response){
-
+/*
         var response = [
 
             {
@@ -166,7 +166,7 @@ function placeMarkers(){
                 "categoria": "1"
             },
 
-        ];
+        ];*/
          
 
         $.each(response, function( i, item ){
@@ -182,7 +182,7 @@ function placeMarkers(){
               content: item.descricao
             });
 
-            m.setIcon('http://localhost/map/img/marker.png');
+            m.setIcon('http://localhost:4567/img/marker.png');
 
             google.maps.event.addListener(m, 'click', function() {
                 var self = this;
@@ -218,7 +218,7 @@ $("#modal-report form").on('submit', function(e){
     $.ajax({
         type: "POST",
         data: data,
-        url: "http://localhost",
+        url: "http://localhost:4567/salvar",
         success: function(){
             $('#modal-report').modal('hide');
             alert('Problema reportado com sucesso.');

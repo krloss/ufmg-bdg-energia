@@ -3,6 +3,7 @@ package br.ufmg.dcc.bdg.energia;
 import com.google.gson.Gson;
 import spark.*;
 
+
 public class Energia {
     public static void main(String[] args) {
         System.out.println("[Energia] >>> Inicio...");
@@ -12,8 +13,8 @@ public class Energia {
             Spark.externalStaticFileLocation(args[0]);
         }
         else
-            Spark.staticFileLocation("/"); // energia/src/main/resources
-
+            Spark.staticFileLocation("/public"); // energia/src/main/resources/public
+        
         Spark.get(new Route("/sobre") {
             @Override
             public Object handle(Request request, Response response) {
@@ -73,7 +74,8 @@ public class Energia {
                 }
             }
         });
-
+        
+        //Spark.get("/", (rq, rs) -> new ModelAndView("index.hbs"), new HandlebarsTemplateEngine());
         System.out.println("[Energia] >>> Fim...");
     }
 }
