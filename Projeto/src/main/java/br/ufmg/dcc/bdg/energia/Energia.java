@@ -3,8 +3,6 @@ package br.ufmg.dcc.bdg.energia;
 import com.google.gson.Gson;
 import spark.*;
 
-import java.sql.ResultSet;
-
 public class Energia {
     public static void main(String[] args) {
         System.out.println("[Energia] >>> Inicio...");
@@ -16,32 +14,63 @@ public class Energia {
         else
             Spark.staticFileLocation("/"); // energia/src/main/resources
 
-        Spark.get(new Route("/oi") {
+        Spark.get(new Route("/sobre") {
             @Override
             public Object handle(Request request, Response response) {
-                return "Olá, testado!";
+                return "<H1>Energia 1.0</H1>";
             }
         });
 
-        Spark.get(new Route("/consulta","application/json") {
+        // salvar?latitude=-19.8690827&longitude=-43.9685728&endereco=UFMG&classificacao=Teste&descricao=Testando
+        // {"id":7,"endereco":"UFMG","classificacao":"Teste","descricao":"Testando","latitude":"-19.8690827","longitude":"-43.9685728"}
+        Spark.get(new Route("/salvar","application/json") {
             @Override
             public Object handle(Request request, Response response) {
-                TabelaTeste teste = null;
+                Ponto ponto = new Ponto(request.queryParams("latitude"),request.queryParams("longitude"),
+                    request.queryParams("endereco"),request.queryParams("classificacao"),request.queryParams("descricao"));
 
                 try {
-                    ResultSet resultado = new BancoDados().criaInstrucao("SELECT * FROM teste;").executeQuery();
-
-                    while(resultado.next()) {
-                        teste = new TabelaTeste(resultado);
-                    }
+                    return new Gson().toJson(ponto.salvar());
                 }
                 catch(Exception e) {
-                    System.out.println(">>> " + e.getMessage());
+                    return e.getMessage();
                 }
+            }
+        });
 
-                if(teste == null) teste = new TabelaTeste("Autor","Nome");
+        // remover/7
+        Spark.get(new Route("/remover/:id","application/json") {
+            @Override
+            public Object handle(Request request, Response response) {
+                String id = request.params(":id");
 
-                return new Gson().toJson(teste);
+                if(null == id || "" == id) return "Identificador do Ponto é Obrigatório.";
+
+                try {
+                    Ponto.remover(Long.valueOf(id));
+                    return "Registro Removido com Sucesso.";
+                }
+                catch(Exception e) {
+                    return e.getMessage();
+                }
+            }
+        });
+
+        // pesquisar?id=3&endereco=ICEX&classificacao=Falta de Energia&descricao=Corte&coordenadas=-19.869502517006683 -43.955810715747134&coordenadas=-19.859412056405496 -43.9595872660401&coordenadas=-19.864941708330374 -43.97610967357184
+        // [{"id":3,"endereco":"ICEX","classificacao":"Falta de Energia","descricao":"Corte de Energia","latitude":"-19.86923008300448","longitude":"-43.96415775020148"}]
+        Spark.get(new Route("/pesquisar","application/json") {
+            @Override
+            public Object handle(Request request, Response response) {
+                QueryParamsMap coordenadas = request.queryMap("coordenadas");
+
+                try {
+                    return new Gson().toJson(Ponto.pesquisar(request.queryMap("id").longValue(),
+                        request.queryParams("endereco"),request.queryParams("classificacao"),
+                        request.queryParams("descricao"),coordenadas.hasValue() ? coordenadas.values() : null));
+                }
+                catch(Exception e) {
+                    return e.getMessage();
+                }
             }
         });
 
