@@ -7,7 +7,7 @@
 
 ## Exemplos de chamadas:
 
-```
+```javascript
 $.ajax({url:'salvar', dataType:'json',
 	data:{latitude:'-19.8690827', longitude:'-43.9685728',
 		endereco:'UFMG', classificacao:'Teste', descricao:'Testando'},
@@ -18,14 +18,14 @@ $.ajax({url:'salvar', dataType:'json',
 ```
 
 
-```
+```javascript
 $.ajax({url:'remover/7', data:{},
 	success:function(data,textStatus,jqXHR) { alert(data); }
 });
 ```
 
 
-```
+```javascript
 $.ajax({url:'pesquisar', dataType:'json', traditional:true, data:{
         id:3, endereco:'ICEX', classificacao:'Falta de Energia', descricao:'Corte',
         coordenadas:['-19.869502517006683 -43.955810715747134','-19.859412056405496 -43.9595872660401','-19.864941708330374 -43.97610967357184']
