@@ -7,7 +7,7 @@ function showAddress(val) {
             marker.setPosition(results[0].geometry.location);
             geocode(results[0].geometry.location);
         }
-        else alert("N√£o foi poss√≠vel encontrar um local aproximado com estes termos.");
+        else alert("N„o foi possÌvel encontrar um local aproximado com estes termos.");
     });
 }
 
@@ -25,7 +25,7 @@ function geocode(position,pan) {
             html += '<br /><small>Latitude: '+ marker.getPosition().lat() +'<br />Longitude: '+ marker.getPosition().lng() +'</small><br/>';
             html += '<div class="text-center"><a class="btn pos-report" target="_blank" href="javascript:void(0);">Reportar problema</a></div>';
         }
-        else html += 'N√£o foi poss√≠vel determinar um endere√ßo v√°lido para essa localiza√ß√£o';
+        else html += 'N„o foi possÌvel determinar um endereÁo v·lido para essa localizaÁ„o';
         
         if(pan) map.panTo(marker.getPosition());
 
@@ -116,7 +116,7 @@ function placeMarkers() {
                 var m = new google.maps.Marker({map:map, position:latLng, clickable:true});
 
                 m.info = new google.maps.InfoWindow({content:data[i].descricao});
-                m.setIcon('http://localhost:4567/img/marker.png');
+                m.setIcon('img/marker.png');
 
                 google.maps.event.addListener(m,'click',function() {
                     var self = this;
