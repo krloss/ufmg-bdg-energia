@@ -142,9 +142,6 @@ $("#modal-report form").on('submit',function(e) {
     
     var data = $(this).serialize() || {};
 
-    data['classificacao'] = $('select').val();
-    data['descricao'] = $('textarea').val();
-
     $.ajax({url:'salvar', dataType:'json', data:data,
         success:function(data,textStatus,jqXHR) {
             alert('Problema reportado com sucesso. Protocolo: '+ data.id);
