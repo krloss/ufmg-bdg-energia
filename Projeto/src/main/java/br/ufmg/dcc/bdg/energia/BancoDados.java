@@ -27,7 +27,7 @@ public class BancoDados {
     }
 
     public static BancoDados getInstacia() throws Exception {
-        if(null == instacia) instacia = new BancoDados();
+        if(null == instacia || instacia.conexao.isClosed()) instacia = new BancoDados();
 
         return instacia;
     }
